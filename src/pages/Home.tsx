@@ -38,7 +38,7 @@ const Home: React.FC<any> = ({location, history}) => {
       <div className="pb-3 pt-8 text-center text-yellow-400 font-medium text-xl sm:text-2xl md:text-3xl">Our Poke`mon</div>
         <InfiniteScroll
          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 p-6"
-         initialLoad={false}
+         initialLoad={true}
          loadMore={getPokemon}
          hasMore={true}
          loader={(
