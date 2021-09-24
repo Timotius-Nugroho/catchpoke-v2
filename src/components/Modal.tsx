@@ -1,14 +1,43 @@
-import React, {useState} from "react";
+import React, {useState, useContext, useEffect} from "react";
+import {RootContext} from "../helpers/Context"
 
 interface Props {
   isChaught: boolean
-  handleGetPoke: (name: string) => void,
+  defaultName: string | null,
+  artwork: string | null,
+  history: any,
   handleClose: () => void
 }
 
-const Modal: React.FC<Props> = ({isChaught, handleGetPoke, handleClose}) => {
-  const [pokeName, setPokeName] = useState<string>("")
-  console.log(pokeName)
+const Modal: React.FC<Props> = ({isChaught, defaultName, artwork, history, handleClose}) => {
+  const [pokeName, setPokeName] = useState<string | null>(defaultName)
+  const [disabelBtn, setDisableBtn] = useState<boolean>(false)
+  const {myPokeList, dispact} = useContext<any>(RootContext)
+
+  const addPokemon = (): void => {
+    dispact({type: "ADD_POKE", data: {
+      name: pokeName ? pokeName : defaultName,
+      defaultName,
+      artwork: artwork
+    }})
+    handleClose()
+    setTimeout(()=> {
+      history.push("/my-poke")
+    }, 500)
+  }
+
+  const checkIsExist = (event: React.ChangeEvent<HTMLInputElement>):void => {
+    const newName = event.target.value ? event.target.value : defaultName
+    setPokeName(newName)
+    const isExist = myPokeList.filter((e: any) => e.name === newName).length
+    isExist ? setDisableBtn(true) : setDisableBtn(false)
+  }
+
+  useEffect(()=>{
+    const isExist = myPokeList.filter((e: any) => e.name === defaultName).length
+    isExist ? setDisableBtn(true) : setDisableBtn(false)
+    // eslint-disable-next-line
+  },[])
 
   return(
     <div className="fixed bottom-0 right-0 top-0 left-0 m-auto w-full h-full flex flex-wrap content-center">
@@ -29,13 +58,22 @@ const Modal: React.FC<Props> = ({isChaught, handleGetPoke, handleClose}) => {
             <input
               className="mt-4 mb-4 rounded-md text-center focus:outline-none text-black w-11/12 h-12"
               placeholder="Give him a name..."
-              onChange={(event) => {setPokeName(event.target.value)}}
+              onChange={(event) => {checkIsExist(event)}}
             />
-            <button className="bg-yellow-500 pt-2 pb-2 pl-4 pr-4 rounded-md text-black text-xs sm:text-sm md:text-lg hover:shadow-yellow"
-              onClick={()=> {handleGetPoke(pokeName)}}
-            >
-              Save
-            </button>
+            {disabelBtn ? (
+              <button
+                disabled
+                className="bg-yellow-300 cursor-not-allowed pt-2 pb-2 pl-4 pr-4 rounded-md text-black text-xs sm:text-sm md:text-lg"
+              >
+                Name Poke` already exist
+              </button>
+            ) : (
+              <button className="bg-yellow-500 pt-2 pb-2 pl-4 pr-4 rounded-md text-black text-xs sm:text-sm md:text-lg hover:shadow-yellow"
+              onClick={()=> {addPokemon()}}
+              >
+                Save
+              </button>
+            )}
           </div>
        )}
      </div>

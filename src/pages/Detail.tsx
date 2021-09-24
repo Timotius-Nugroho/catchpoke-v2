@@ -47,29 +47,28 @@ const Detail: React.FC<any> = ({location, history}) => {
     setIsChaught(false)
   }
 
-  const savePoke = (name: string):void => {
-    const {artwork} = pokemonData
-    console.log("GEt Poke", name,"==", artwork)
-    closeModal()
-  }
-
   const getPokemonData = async (): Promise<void> => {
     const dataFromServer = await getPokemon(pokemonData.name)
     setPokemonData({...pokemonData, ...dataFromServer})
   }
-
+  
   useEffect(()=> {
     getPokemonData()
+    // eslint-disable-next-line
   }, [])
-
-  console.log(pokemonData)
 
   return (
     <div>
       <NavBar location={pathname} history={history}/>
       <CatchButton handleCatch={catchPoke} isCalc={isCalc}/>
       {showModal ? (
-        <Modal handleGetPoke={savePoke} handleClose={closeModal} isChaught={isChaught}/>
+        <Modal
+          defaultName={pokemonData.name}
+          artwork={pokemonData.artwork}
+          handleClose={closeModal}
+          isChaught={isChaught}
+          history={history}
+        />
       ) : ""}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <div className="flex flex-wrap content-center" >
@@ -94,7 +93,7 @@ const Detail: React.FC<any> = ({location, history}) => {
             <div className="text-lg font-bold mb-6 mt-6">Types</div>
             {pokemonData.types.map((item, index)=> {
               return(
-                <button className="bg-yellow-500 p-2 rounded-md text-black text-xs sm:text-sm" key={index}>
+                <button className="bg-yellow-500 p-2 font-semibold m-1 rounded-md text-black text-xs sm:text-sm" key={index}>
                   {item}
                 </button>
               )

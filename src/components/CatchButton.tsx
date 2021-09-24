@@ -6,7 +6,7 @@ interface Props {
 }
 
 const CatchButton: React.FC<Props> = ({handleCatch, isCalc}) => {
-
+  
   return(
     <div>
       <button 
