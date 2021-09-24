@@ -2,29 +2,33 @@ import React, {useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import NavBar from '../components/NavBar';
 import PokeCard from '../components/PokeCard';
+import {getAllPokemons} from "../api/index"
 
 interface Pokemon {
   name: string,
   image: string,
-  isCaught: boolean
+  artwork: string
+}
+
+interface PageInfo {
+  limit: number,
+  offset: number
 }
 
 const Home: React.FC<any> = ({location, history}) => {
   const {pathname} = location
   const [pokemons, setPokemons] = useState<Array<Pokemon>>([])
+  const [pageInfo, setPageInfo] = useState<PageInfo>({limit: 12, offset: 0})
 
-  const moveToDetail = (name:string, image:string):void => {
-    history.push(`/detail?name=${name}&image=${image}`)
+  const moveToDetail = (name:string, artwork:string):void => {
+    history.push(`/detail?name=${name}&artwork=${artwork}`)
   }
 
-  const getPokemon = (): void => {
-    setTimeout(() => {
-      setPokemons([...pokemons, 
-        {name: "poke_n2", image: `${process.env.PUBLIC_URL}/samplePokeIcon.png`, isCaught: true},
-        {name: "poke_n1", image: `${process.env.PUBLIC_URL}/samplePokeIcon.png`, isCaught: true},
-        {name: "poke_n3", image: `${process.env.PUBLIC_URL}/samplePokeIcon.png`, isCaught: true}
-      ])
-    }, 1000);
+  const getPokemon = async (): Promise<void> => {
+    const {limit, offset} = pageInfo
+    const {nextOffset, results} = await getAllPokemons(limit, offset)
+    setPageInfo({...pageInfo, offset: nextOffset})
+    setPokemons([...pokemons, ...results])
   }
 
   return (
@@ -46,8 +50,9 @@ const Home: React.FC<any> = ({location, history}) => {
             <PokeCard
               key={index}
               name={item.name}
-              isCaught={item.isCaught}
+              isCaught={true}
               image={item.image}
+              artwork={item.artwork}
               moveToDetail={moveToDetail}
             />
           )
