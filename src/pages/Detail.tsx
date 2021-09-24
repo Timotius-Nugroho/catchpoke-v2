@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import NavBar from '../components/NavBar';
 import CatchButton from '../components/CatchButton'
 import Modal from '../components/Modal'
+import DetailLoader from '../components/DetailLoader';
 import {getPokemon} from '../api/index'
 
 interface Stats {
@@ -85,11 +86,14 @@ const Detail: React.FC<any> = ({location, history}) => {
                 return (
                   <div className="p-4 text-center bg-card rounded-lg shadow-yellow" key={index}>
                     <p className="text-sm sm:text-lg md:text-2xl font-bold">{item.base}</p>
-                    <p className="mt-4 text-sm md:text-lg">{item.stat}</p>
+                    <p className="mt-4 text-xs md:text-md">{item.stat}</p>
                   </div>
                 )
               })}
             </div>
+            {pokemonData.stats.length === 0 ? (
+              <DetailLoader/>
+            ) : ""}
             <div className="text-lg font-bold mb-6 mt-6">Types</div>
             {pokemonData.types.map((item, index)=> {
               return(
@@ -98,6 +102,9 @@ const Detail: React.FC<any> = ({location, history}) => {
                 </button>
               )
             })}
+            {pokemonData.types.length === 0 ? (
+              <DetailLoader/>
+            ) : ""}
           </code>
         </div>
       </div>
@@ -112,6 +119,12 @@ const Detail: React.FC<any> = ({location, history}) => {
             )
           })}
         </div>
+        {pokemonData.moves.length === 0 ? (
+          <div className="space-y-4">
+            <DetailLoader/>
+            <DetailLoader/>
+          </div>
+            ) : ""}
       </code>
     </div>
   );

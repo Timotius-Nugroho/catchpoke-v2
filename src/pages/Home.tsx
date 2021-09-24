@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import NavBar from '../components/NavBar';
 import PokeCard from '../components/PokeCard';
+import HomeLoader from '../components/HomeLoader';
 import {getAllPokemons} from "../api/index"
 
 interface Pokemon {
@@ -37,26 +38,27 @@ const Home: React.FC<any> = ({location, history}) => {
       <div className="mt-4"><img src={`${process.env.PUBLIC_URL}/pokeBanner.jpeg`} alt="poke-banner"/></div>
       <div className="pb-3 pt-8 text-center text-yellow-400 font-medium text-xl sm:text-2xl md:text-3xl">Our Poke`mon</div>
         <InfiniteScroll
-         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 p-6"
          initialLoad={true}
          loadMore={getPokemon}
          hasMore={true}
          loader={(
-           <p key={`init`}>Loading...</p>
+           <HomeLoader key={"init"}/>
          )}
         >
-          {pokemons.map((item, index) => {
-          return (
-            <PokeCard
-              key={index}
-              name={item.name}
-              isCaught={true}
-              image={item.image}
-              artwork={item.artwork}
-              moveToDetail={moveToDetail}
-            />
-          )
-        })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 p-6">
+            {pokemons.map((item, index) => {
+              return (
+                <PokeCard
+                  key={index}
+                  name={item.name}
+                  isCaught={true}
+                  image={item.image}
+                  artwork={item.artwork}
+                  moveToDetail={moveToDetail}
+                />
+              )
+            })}
+          </div>
         </InfiniteScroll>
     </div>
   );

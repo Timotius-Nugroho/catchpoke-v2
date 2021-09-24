@@ -12,7 +12,7 @@ const NavBar: React.FC<Props> = ({location, history}) => {
   }
 
   return(
-    <div className="shadow-yellow rounded-b-3xl sticky top-0 bg-black pl-5 pr-5 pt-3 pb-5">
+    <div className="shadow-yellow rounded-b-3xl sticky top-0 bg-black pl-5 pr-5 pt-3 pb-5 z-50">
       <div className="grid grid-cols-1 sm:grid-cols-2 justify-items-stretch">
       <div className="justify-self-start">
         <div
