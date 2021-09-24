@@ -9,9 +9,13 @@ interface Pokemon {
   isCaught: boolean
 }
 
-const Home: React.FC<any> = ({location}) => {
+const Home: React.FC<any> = ({location, history}) => {
   const {pathname} = location
   const [pokemons, setPokemons] = useState<Array<Pokemon>>([])
+
+  const moveToDetail = (name:string, image:string):void => {
+    history.push(`/detail?name=${name}&image=${image}`)
+  }
 
   const getPokemon = (): void => {
     setTimeout(() => {
@@ -20,12 +24,12 @@ const Home: React.FC<any> = ({location}) => {
         {name: "poke_n1", image: `${process.env.PUBLIC_URL}/samplePokeIcon.png`, isCaught: true},
         {name: "poke_n3", image: `${process.env.PUBLIC_URL}/samplePokeIcon.png`, isCaught: true}
       ])
-    }, 2000);
+    }, 1000);
   }
 
   return (
     <div>
-      <NavBar location={pathname}/>
+      <NavBar location={pathname} history={history}/>
       <div className="mt-4"><img src={`${process.env.PUBLIC_URL}/pokeBanner.jpeg`} alt="poke-banner"/></div>
       <div className="pb-3 pt-8 text-center text-yellow-400 font-medium text-xl sm:text-2xl md:text-3xl">Our Poke`mon</div>
         <InfiniteScroll
@@ -39,7 +43,13 @@ const Home: React.FC<any> = ({location}) => {
         >
           {pokemons.map((item, index) => {
           return (
-            <PokeCard key={index} name={item.name} isCaught={item.isCaught} image={item.image} />
+            <PokeCard
+              key={index}
+              name={item.name}
+              isCaught={item.isCaught}
+              image={item.image}
+              moveToDetail={moveToDetail}
+            />
           )
         })}
         </InfiniteScroll>

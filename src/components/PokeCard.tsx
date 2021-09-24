@@ -4,12 +4,16 @@ interface Props {
   name: string,
   image: string,
   isCaught: boolean
+  moveToDetail: (name:string, image:string) => void
 }
 
-const PokeCard: React.FC<Props> = ({name, image, isCaught}) => {
+const PokeCard: React.FC<Props> = ({name, image, isCaught, moveToDetail}) => {
 
   return(
-    <div className="grid grid-cols-3 gap-1 bg-card rounded-lg cursor-pointer h-32 p-1 hover:shadow-yellow">
+    <div
+      className="grid grid-cols-3 gap-1 bg-card rounded-lg cursor-pointer h-32 p-1 hover:shadow-yellow"
+      onClick={()=>{moveToDetail(name, image)}}
+    >
       <div className="bg-yellow-500 bg-opacity-30 rounded-lg flex flex-wrap content-center">
         <img className="w-auto mx-auto" src={image} alt="poke-icon"/>
       </div>

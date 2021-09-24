@@ -8,7 +8,7 @@ interface Pokemon {
   artwork: string,
 }
 
-const Detail: React.FC<any> = ({location}) => {
+const Detail: React.FC<any> = ({location, history}) => {
   const {pathname} = location
   const [pokemonData, setPokemonData] = useState<Pokemon>({
     name: "",
@@ -16,18 +16,22 @@ const Detail: React.FC<any> = ({location}) => {
   })
   const [showModal, setShowModal] = useState<boolean>(false)
   const [isCalc, setIsCalc] = useState<boolean>(false)
+  const [isChaught, setIsChaught] = useState<boolean>(false)
 
-  const catchPoke = ():void =>  {
-    console.log("Catch poke")
+  const catchPoke = async (): Promise<void> =>  {
     setIsCalc(true)
-    setTimeout(()=> {
-      setShowModal(true)
-      setIsCalc(false)
-    }, 1000)
+    const prob = Math.floor(Math.random() * 10);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsCalc(false)
+    if (prob > 5) {
+      setIsChaught(true)
+    }
+    setShowModal(true)
   }
 
   const closeModal = (): void => {
     setShowModal(false)
+    setIsChaught(false)
   }
 
   const getPoke = (name: string):void => {
@@ -38,10 +42,10 @@ const Detail: React.FC<any> = ({location}) => {
 
   return (
     <div>
-      <NavBar location={pathname}/>
+      <NavBar location={pathname} history={history}/>
       <CatchButton handleCatch={catchPoke} isCalc={isCalc}/>
       {showModal ? (
-        <Modal handleGetPoke={getPoke} handleClose={closeModal} isChaught={true}/>
+        <Modal handleGetPoke={getPoke} handleClose={closeModal} isChaught={isChaught}/>
       ) : ""}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <div className="flex flex-wrap content-center" >
