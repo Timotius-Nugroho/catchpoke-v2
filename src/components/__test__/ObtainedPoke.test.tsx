@@ -24,6 +24,7 @@ describe('ObtainedPoke compnent', () => {
     const releaseButton = getByText(/release/i)
 
     expect(pokeArtwork).toBeInTheDocument()
+    expect(pokeArtwork.getAttribute("src")).toBe(artworkMock)
     expect(releaseButton).toBeInTheDocument()
     fireEvent.click(pokeArtwork)
     expect(moveToDetailMock).toBeCalledTimes(1)

@@ -33,6 +33,7 @@ describe('PokeCard component', () => {
 
     expect(pokeNameText).toBeInTheDocument()
     expect(pokeIcon).toBeInTheDocument()
+    expect(pokeIcon.getAttribute("src")).toBe(imageMock)
     fireEvent.click(pokeIcon)
     expect(moveToDetailMock).toBeCalledTimes(1)
     // debug()
