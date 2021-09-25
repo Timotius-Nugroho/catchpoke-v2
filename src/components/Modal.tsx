@@ -40,7 +40,7 @@ const Modal: React.FC<Props> = ({isChaught, defaultName, artwork, history, handl
   },[])
 
   return(
-    <div className="fixed bottom-0 right-0 top-0 left-0 m-auto w-full h-full flex flex-wrap content-center">
+    <div className="fixed bottom-0 right-0 top-0 left-0 m-auto w-full h-full flex flex-wrap content-center z-50">
      <div className="p-4 text-center border-4 border-yellow-700 bg-card rounded-lg shadow-yellow bg-opacity-95 w-11/12 sm:w-3/5 mx-auto">
        {!isChaught ? (
          <div>

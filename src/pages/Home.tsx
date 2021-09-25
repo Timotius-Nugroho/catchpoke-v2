@@ -51,7 +51,6 @@ const Home: React.FC<any> = ({location, history}) => {
                 <PokeCard
                   key={index}
                   name={item.name}
-                  isCaught={true}
                   image={item.image}
                   artwork={item.artwork}
                   moveToDetail={moveToDetail}

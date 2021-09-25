@@ -73,7 +73,7 @@ const Detail: React.FC<any> = ({location, history}) => {
       ) : ""}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <div className="flex flex-wrap content-center" >
-          <img className="mx-auto" src={`${pokemonData.artwork}`} alt="poke-artwork"/>
+          <img className="mx-auto w-7/12" src={`${pokemonData.artwork}`} alt="poke-artwork"/>
         </div>
         <div>
           <div className="text-center font-medium text-xl sm:text-2xl md:text-3xl mt-4 mb-12">

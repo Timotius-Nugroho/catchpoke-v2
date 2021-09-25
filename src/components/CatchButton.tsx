@@ -12,7 +12,7 @@ const CatchButton: React.FC<Props> = ({handleCatch, isCalc}) => {
       <button 
         onClick={handleCatch}
         disabled={isCalc}
-        className="fixed bottom-0 right-0 m-4 border-4 border-yellow-700 bg-yellow-500 hover:shadow-yellow p-4 rounded-lg text-black text-xs sm:text-sm md:text-lg"
+        className="fixed bottom-0 right-0 m-4 border-4 border-yellow-700 bg-yellow-500 hover:shadow-yellow p-4 rounded-lg text-black text-xs sm:text-sm md:text-lg z-50"
       >
         {isCalc ? "Calculating your luck ..." : "catch this poke`"}
       </button>

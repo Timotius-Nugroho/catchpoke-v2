@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import {RootContext} from "../helpers/Context"
 
 interface Props {
   name: string,
   image: string,
   artwork: string,
-  isCaught: boolean
   moveToDetail: (name:string, artwork:string) => void
 }
 
-const PokeCard: React.FC<Props> = ({name, image, artwork, isCaught, moveToDetail}) => {
+const PokeCard: React.FC<Props> = ({name, image, artwork, moveToDetail}) => {
+  const [isCaught, setIsCaught] = useState<boolean>(false)
+  const {myPokeList} = useContext<any>(RootContext)
+  
+  useEffect(()=> {
+    const isExist = myPokeList.filter((e: any) => e.defaultName === name).length
+    isExist ? setIsCaught(true) : setIsCaught(false)
+    // eslint-disable-next-line
+  }, [])
 
   return(
     <div
