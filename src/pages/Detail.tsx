@@ -81,7 +81,7 @@ const Detail: React.FC<any> = ({location, history}) => {
           </div>
           <code className="p-5">
             <div className="text-lg font-bold mb-6">Stats</div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-5">
               {pokemonData.stats.map((item, index) => {
                 return (
                   <div className="p-4 text-center bg-card rounded-lg shadow-yellow" key={index}>
