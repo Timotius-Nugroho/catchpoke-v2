@@ -26,6 +26,7 @@ const Home: React.FC<any> = ({location, history}) => {
   }
 
   const getPokemon = async (): Promise<void> => {
+    console.log("LOADING DATA ...")
     const {limit, offset} = pageInfo
     const {nextOffset, results} = await getAllPokemons(limit, offset)
     setPageInfo({...pageInfo, offset: nextOffset})
@@ -38,7 +39,7 @@ const Home: React.FC<any> = ({location, history}) => {
       <div className="mt-4"><img src={`${process.env.PUBLIC_URL}/pokeBanner.jpeg`} alt="poke-banner"/></div>
       <div className="pb-3 pt-8 text-center text-yellow-400 font-medium text-xl sm:text-2xl md:text-3xl">Our Poke`mon</div>
         <InfiniteScroll
-         initialLoad={true}
+         initialLoad={false}
          loadMore={getPokemon}
          hasMore={true}
          loader={(
