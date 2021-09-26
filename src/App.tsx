@@ -30,7 +30,7 @@ const App: React.FC = (): any => {
       newPokeList = myPokeList.filter((e) => e.name !== data.name)
     }
 
-    localStorage.setItem("mypoke", JSON.stringify(myPokeList));
+    localStorage.setItem("mypoke", JSON.stringify(newPokeList));
     return setMyPokeList(newPokeList)
   }
 
