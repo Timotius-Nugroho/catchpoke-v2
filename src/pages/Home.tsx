@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import NavBar from '../components/NavBar';
 import PokeCard from '../components/PokeCard';
@@ -33,13 +33,18 @@ const Home: React.FC<any> = ({location, history}) => {
     setPokemons([...pokemons, ...results])
   }
 
+  useEffect(() => {
+    getPokemon()
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <div>
       <NavBar location={pathname} history={history}/>
       <div className="mt-4"><img src={`${process.env.PUBLIC_URL}/pokeBanner.jpeg`} alt="poke-banner"/></div>
       <div className="pb-3 pt-8 text-center text-yellow-400 font-medium text-xl sm:text-2xl md:text-3xl">Our Poke`mon</div>
         <InfiniteScroll
-         initialLoad={true}
+         initialLoad={false}
          loadMore={getPokemon}
          hasMore={true}
          loader={(
