@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import NavBar from '../components/NavBar';
-import CatchButton from '../components/CatchButton'
+import BottomNav from '../components/BottomNav';
 import Modal from '../components/Modal'
 import DetailLoader from '../components/DetailLoader';
 import {getPokemon} from '../api/index'
@@ -61,7 +61,6 @@ const Detail: React.FC<any> = ({location, history}) => {
   return (
     <div>
       <NavBar location={pathname} history={history}/>
-      <CatchButton handleCatch={catchPoke} isCalc={isCalc}/>
       {showModal ? (
         <Modal
           defaultName={pokemonData.name}
@@ -108,7 +107,7 @@ const Detail: React.FC<any> = ({location, history}) => {
           </code>
         </div>
       </div>
-      <code className="p-5 mb-24">
+      <code className="p-5 mb-36">
         <div className="text-lg font-bold mb-6 mt-6">Moves</div>
         <div className="flex flex-wrap">
           {pokemonData.moves.map((item, index)=> {
@@ -126,6 +125,7 @@ const Detail: React.FC<any> = ({location, history}) => {
           </div>
             ) : ""}
       </code>
+      <BottomNav location={pathname} history={history} isCalc={isCalc} handleCatch={catchPoke}/>
     </div>
   );
 }

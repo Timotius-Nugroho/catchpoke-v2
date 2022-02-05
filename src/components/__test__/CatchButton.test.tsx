@@ -9,8 +9,8 @@ describe('CatchButton component', () => {
   })
 
   it('should render without crashing', () => {
-    const {debug, getByText} = render(<CatchButton handleCatch={handleCatchMock} isCalc={false} />)
-    const catchButton = getByText(/catch this poke`/i)
+    const {debug, getByTestId} = render(<CatchButton handleCatch={handleCatchMock} isCalc={false} />)
+    const catchButton = getByTestId("catch-btn")
     expect(catchButton).toBeInTheDocument()
     fireEvent.click(catchButton)
     expect(handleCatchMock).toBeCalledTimes(1)
@@ -19,11 +19,11 @@ describe('CatchButton component', () => {
 
   it('should disbale button while calculating your luck', () => {
     const isCaclMock = true
-    const {debug, getByText} = render(<CatchButton handleCatch={handleCatchMock} isCalc={isCaclMock} />)
-    const catchButton = getByText(/Calculating your luck .../i)
+    const {debug, getByTestId} = render(<CatchButton handleCatch={handleCatchMock} isCalc={isCaclMock} />)
+    const catchButton = getByTestId("catch-btn")
     
     expect(catchButton).toBeInTheDocument()
-    expect(catchButton.getAttributeNames()).toContainEqual('disabled')
+    expect(catchButton).toHaveAttribute('disabled');
     // debug()
   })
 })

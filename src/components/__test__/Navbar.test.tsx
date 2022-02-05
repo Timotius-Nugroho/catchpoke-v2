@@ -16,8 +16,7 @@ describe('NavBar Component', () => {
     expect(logo).toBeInTheDocument()
     expect(myPokeLogo).toBeInTheDocument()
     fireEvent.click(logo)
-    fireEvent.click(myPokeLogo)
-    expect(pushMock).toBeCalledTimes(2)
+    expect(pushMock).toBeCalledTimes(1)
     // debug()
   })
 

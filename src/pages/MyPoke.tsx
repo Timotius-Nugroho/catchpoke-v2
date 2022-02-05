@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import NavBar from '../components/NavBar';
 import ObtainedPoke from '../components/ObtainedPoke';
 import {RootContext} from "../helpers/Context"
+import BottomNav from '../components/BottomNav';
 
 
 const MyPoke: React.FC<any> = ({location, history}) => {
@@ -22,7 +23,7 @@ const MyPoke: React.FC<any> = ({location, history}) => {
     <div>
       <NavBar location={pathname} history={history}/>
       <div className="pb-3 pt-8 text-center font-medium text-xl sm:text-2xl md:text-3xl">My Poke`mon</div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-5 mb-24">
         {myPokeList.map((item: any, index: number) => {
           return(
             <ObtainedPoke
@@ -39,6 +40,7 @@ const MyPoke: React.FC<any> = ({location, history}) => {
       {myPokeList.length > 0 ? "" : (
         <code className="p-5 text-lg sm:text-xl md:text-2xl">No Poke`mon yet</code>
       )}
+      <BottomNav location={pathname} history={history} />
     </div>
   );
 }

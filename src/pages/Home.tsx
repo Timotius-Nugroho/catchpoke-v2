@@ -4,6 +4,7 @@ import NavBar from '../components/NavBar';
 import PokeCard from '../components/PokeCard';
 import HomeLoader from '../components/HomeLoader';
 import {getAllPokemons} from "../api/index"
+import BottomNav from '../components/BottomNav';
 
 interface Pokemon {
   name: string,
@@ -27,10 +28,15 @@ const Home: React.FC<any> = ({location, history}) => {
 
   const getPokemon = async (): Promise<void> => {
     console.log("LOADING DATA ...")
+    try {
     const {limit, offset} = pageInfo
     const {nextOffset, results} = await getAllPokemons(limit, offset)
     setPageInfo({...pageInfo, offset: nextOffset})
     setPokemons([...pokemons, ...results])
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   useEffect(() => {
@@ -43,28 +49,30 @@ const Home: React.FC<any> = ({location, history}) => {
       <NavBar location={pathname} history={history}/>
       <div className="mt-4"><img src={`${process.env.PUBLIC_URL}/pokeBanner.jpeg`} alt="poke-banner"/></div>
       <div className="pb-3 pt-8 text-center text-yellow-400 font-medium text-xl sm:text-2xl md:text-3xl">Our Poke`mon</div>
-        <InfiniteScroll
-         initialLoad={false}
-         loadMore={getPokemon}
-         hasMore={true}
-         loader={(
-           <HomeLoader key={"init"}/>
-         )}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 p-6">
-            {pokemons.map((item, index) => {
-              return (
-                <PokeCard
-                  key={index}
-                  name={item.name}
-                  image={item.image}
-                  artwork={item.artwork}
-                  moveToDetail={moveToDetail}
-                />
-              )
-            })}
-          </div>
-        </InfiniteScroll>
+      <InfiniteScroll
+        initialLoad={false}
+        loadMore={getPokemon}
+        hasMore={true}
+        loader={(
+          <HomeLoader key={"init"}/>
+        )}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 p-6">
+          {pokemons.map((item, index) => {
+            return (
+              <PokeCard
+                key={index}
+                name={item.name}
+                image={item.image}
+                artwork={item.artwork}
+                moveToDetail={moveToDetail}
+              />
+            )
+          })}
+        </div>
+      </InfiniteScroll>
+      <div className='mb-24'></div>
+      <BottomNav location={pathname} history={history} />
     </div>
   );
 }
